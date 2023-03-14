@@ -16,14 +16,14 @@ import shop.mtcoding.getintherelogin.util.Fetch;
 public class UserController {
 
     @GetMapping("/loginForm")
-    public String loginForm(){
+    public String loginForm() {
         return "loginForm";
     }
 
     @GetMapping("/callback")
     public @ResponseBody String callback(String code) throws JsonProcessingException {
         // 1. code 값 존재 유무 확인
-        if(code == null || code.isEmpty()){
+        if (code == null || code.isEmpty()) {
             return "bad Request";
         }
 
@@ -42,13 +42,16 @@ public class UserController {
         KakaoToken kakaoToken = om.readValue(codeEntity.getBody(), KakaoToken.class);
 
         // 4. access token으로 email 정보 받기 (ssar@gmail.com)
-        ResponseEntity<String> tokenEntity = Fetch.kakao("https://kapi.kakao.com/v2/user/me", HttpMethod.POST, kakaoToken.getAccessToken());
+        ResponseEntity<String> tokenEntity = Fetch.kakao("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
+                kakaoToken.getAccessToken());
 
         // 5. 해당 email로 회원가입되어 있는 user 정보가 있는지 DB 조회 (X)
 
         // 6. 있으면 그 user 정보로 session 만들어주고, (자동로그인) (X)
 
         // 7. 없으면 강제 회원가입 시키고, 그 정보로 session 만들어주고, (자동로그인)
+
+        // teacher version : ResponseBody에 값 들어오는 것 까지 (dto에 담기 x, 5~7 x)
 
         return tokenEntity.getBody();
     }
