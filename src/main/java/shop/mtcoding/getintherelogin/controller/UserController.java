@@ -25,6 +25,7 @@ import shop.mtcoding.getintherelogin.util.UserStore;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
+    // 복습 1회 완료
 
     private final HttpSession session;
 
